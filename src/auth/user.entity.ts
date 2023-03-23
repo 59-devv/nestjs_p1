@@ -1,18 +1,19 @@
+import { Board } from "src/boards/board.entity"
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from "typeorm"
-import { BoardStatus } from "./board-status.enum"
-import { User } from "src/auth/user.entity"
 
 @Entity()
-export class Board extends BaseEntity {
+@Unique(["username"])
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -26,14 +27,11 @@ export class Board extends BaseEntity {
   deletedAt: Date
 
   @Column()
-  title: string
+  username: string
 
-  @Column()
-  description: string
+  @Column({ select: false })
+  password: string
 
-  @Column()
-  status: BoardStatus = BoardStatus.PUBLIC
-
-  @ManyToOne(() => User, (user) => user.boards, { eager: true })
-  user: User
+  @OneToMany(() => Board, (board) => board.user)
+  boards: Array<Board>
 }

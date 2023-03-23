@@ -30,7 +30,7 @@ module.exports = {
       {
         "printWidth": 120,
         "endOfLine": "off"
-        "semi": "off",
+        "semi": "off"
       },
     ],
   },
