@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseIntPipe,
   Patch,
@@ -33,12 +34,18 @@ export class BoardsController {
 
   @Post()
   @UsePipes(ValidationPipe)
+  @HttpCode(201)
   crateBoard(@Body() createBoardDto: CreateBoardDto, @GetUser() user: User): Promise<Board> {
     return this.boardService.createBoard(createBoardDto, user)
   }
 
   @Delete("/:id")
+  @HttpCode(204)
   deleteBoard(@Param("id", ParseIntPipe) id, @GetUser() user: User): Promise<any> {
+    // TODO: id 에 파이프 빼고 타입 찍어보기
+    // TODO: env 설정하는거 nestjs/config 로
+    // TODO: swagger 붙이기
+    // TODO: 테스트 만들기
     return this.boardService.deleteBoard(id, user)
   }
 
